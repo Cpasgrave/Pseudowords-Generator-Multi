@@ -35,7 +35,7 @@ def analyse(lexique, profondeur_max):
 				precedent = precedent[(1,0)[len(precedent) < profondeur]:] + c
 
 	probas = proba_longeur, proba_debut, proba_fin
-	with open(local_path + f'/Données/Probas_gen_mots_3.0_{language}.pkl', 'wb') as f:
+	with open(local_path + f'/Data/Probas_gen_mots_3.0_{language}.pkl', 'wb') as f:
 		pickle.dump(probas, f)
 
 
@@ -100,8 +100,10 @@ language = fr
 with codecs.open(local_path + '/Data/' +  language, "r", "utf-8") as file:
 	lexique = set(unicodedata.normalize('NFC', w.strip()) for w in file.readlines())
 
-# création des probas
-# probas = analyse(lexique,3)
+if not os.path.isfile(f"Data/Probas_gen_mots_3.0_{language}.pkl"):
+	# création des probas, à la première utilisation
+	print("Please wait, probas are being processed...")
+	probas = analyse(lexique,3)
 
 taille_des_mots = 0
 profondeur = 2.12
